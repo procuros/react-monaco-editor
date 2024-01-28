@@ -125,6 +125,19 @@ function MonacoEditor({
     }
   }, [language]);
 
+  // update onChange
+  useEffect(() => {
+    if (editor.current) {
+      _subscription.current = editor.current.onDidChangeModelContent(
+        (event) => {
+          if (!__prevent_trigger_change_event.current) {
+            onChange(editor.current.getValue(), event);
+          }
+        },
+      );
+    }
+  }, [onChange]);
+
   useEffect(() => {
     if (editor.current) {
       // Don't pass in the model on update because monaco crashes if we pass the model
