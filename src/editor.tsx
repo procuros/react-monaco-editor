@@ -128,6 +128,7 @@ function MonacoEditor({
   // update onChange
   useEffect(() => {
     if (editor.current) {
+      _subscription.current?.dispose();
       _subscription.current = editor.current.onDidChangeModelContent(
         (event) => {
           if (!__prevent_trigger_change_event.current) {
